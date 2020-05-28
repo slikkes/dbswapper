@@ -1,14 +1,20 @@
 import sys
 import utils
 
-def main(toDb):
-	lines = utils.get_lines()
-	lines = utils.swap(lines, toDb)
-	utils.write_file(lines)
+def main(command, toDb):
+	if command == "swap":
+		lines = utils.get_lines()
+		lines = utils.swap(lines, toDb)
+		utils.write_file(lines)
 
-	print("swapped to: " + toDb)
+		print("swapped to: " + toDb)
+
+	if command == "which":
+		print("current db: " + utils.get_current())
 
 # call from cli like: 
 # python3 dbswapper.py option
 # options: ["prod", "dev"]
-main(sys.argv[1])
+command = sys.argv[1]
+param = sys.argv[2] if len(sys.argv) == 3 else None
+main(command, param)
