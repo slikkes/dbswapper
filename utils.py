@@ -1,36 +1,20 @@
-import config
 import re
+import data_service
 
-def get_lines():
-	file = open(config.file, "r")
-	lines = file.readlines()
+def swap_db(env, toDb):
+	config = data_service.find_config_by_name(toDb)
+	env = data_service.find_env_by_name(env)
 
-	return lines
+	lines = get_lines(env["env_path"])
+	lines = swap(lines, config)
 
-
-def swap(lines, toDb):
-	swapped = []
-	for line in lines:
-		parts = line.split("=")
-		if len(parts) > 1 and parts[0] in config.databases[toDb]:
-			changedLine = parts[0] + "=" + config.databases[toDb][parts[0]] + "\n"
-			swapped.append(changedLine)
-		else:
-			swapped.append(line)
-
-	return swapped
+	write_file(lines, env["env_path"])
 
 
-def write_file(lines):
-	file = open(config.file,"w")
+def get_current(env_name):
+	env = data_service.find_env_by_name(env_name)
 
-	file.write("".join(lines))
-	file.close()
-
-
-
-def get_current():
-	lines = get_lines()
+	lines = get_lines(env["env_path"])
 
 	regex = re.compile('^DB_HOST')
 	db = None
@@ -39,10 +23,33 @@ def get_current():
 		if regex.match(line):
 			db =  line.split("=")[1].replace("\n", "")
 
-	name = "None"
-	for key, item in config.databases.items():
-		if item["DB_HOST"] == db:
-			name = key + " - " + item["DB_HOST"]
-			
+	return data_service.find_config_by_host(db)
 
-	return name
+def get_lines(env_path):
+	file = open(env_path, "r")
+	lines = file.readlines()
+
+	return lines
+
+
+def swap(lines, config):
+	conf_keys = config["conf_data"].keys()
+
+	swapped = []
+	for line in lines:
+		parts = line.split("=")
+		if len(parts) > 1 and parts[0] in conf_keys:
+			changedLine = parts[0] + "=" + config["conf_data"][parts[0]] + "\n"
+			swapped.append(changedLine)
+		else:
+			swapped.append(line)
+
+	return swapped
+
+
+def write_file(lines, path):
+	file = open(path,"w")
+
+	file.write("".join(lines))
+	file.close()
+

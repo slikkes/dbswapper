@@ -1,0 +1,38 @@
+{
+	"envs":[
+		{"_id":1,"name":"foo","env_path":".env"},
+		{"_id":2,"name":"bar","env_path":".envbar"}
+	],
+	"db_configs":[
+		{
+			"_id":1,
+			"name":"prod",
+			"conf_data":{
+				"DB_CONNECTION":"mysql",
+				"DB_HOST":"10.0.2.1",
+				"DB_PORT":"3306",
+				"DB_DATABASE":"prod",
+				"DB_USERNAME":"produser",
+				"DB_PASSWORD":"yxcvawr"
+			}
+		},
+		{
+			"_id":2,
+			"name":"dev",
+			"conf_data":{
+				"DB_CONNECTION":"localhost",
+				"DB_HOST":"127.0.0.1",
+				"DB_PORT":"3306",
+				"DB_DATABASE":"homestead",
+				"DB_USERNAME":"root",
+				"DB_PASSWORD":"vagrant"
+			}
+		}
+	]
+}
+
+
+
+
+
+
