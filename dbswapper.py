@@ -2,11 +2,11 @@ import sys
 import utils
 
 def main(params):
-
+	print(params)
 	if params[1] == "swap":
 		utils.swap_db(params[2], params[3])
 
-		print(params[2] + "swapped to: " + params[3])
+		print(params[2] + " swapped to: " + params[3])
 
 	if params[1] == "which":
 		db = utils.get_current(params[2])
