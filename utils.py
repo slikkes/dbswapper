@@ -7,7 +7,6 @@ def swap_db(env, toDb):
 
 	lines = get_lines(env["env_path"])
 	lines = swap(lines, config)
-
 	write_file(lines, env["env_path"])
 
 

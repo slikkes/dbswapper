@@ -4,7 +4,10 @@ import utils
 def save_changes(envs):
 	for env in envs:
 		if is_chaged(env):
-			utils.swap_db(env["name"],env["var"].get())
+			to_db = env["var"].get()
+			utils.swap_db(env["name"],to_db)
+			env["current"] = to_db
+
 
 
 def is_chaged(item):
