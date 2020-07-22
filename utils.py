@@ -28,6 +28,7 @@ def get_current(env_name):
 def get_lines(env_path):
 	file = open(env_path, "r")
 	lines = file.readlines()
+	file.close()
 
 	return lines
 
@@ -51,5 +52,6 @@ def write_file(lines, path):
 	file = open(path,"w")
 
 	file.write("".join(lines))
+	file.flush()
 	file.close()
 
