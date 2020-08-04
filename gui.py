@@ -8,7 +8,7 @@ from GuiService import GuiService
 master = Tk()
 data_service = DataService()
 env_manager = EnvManager(data_service)
-gui_service = GuiService(env_manager)
+gui_service = GuiService(master, env_manager)
 
 configs = data_service.get_db_opts()
 values = [x["name"] for x in configs]
@@ -16,10 +16,11 @@ values = [x["name"] for x in configs]
 
 envs = data_service.get_envs()
 
+gui_service.create_main_menu()
 
 for i,item in enumerate(envs):
 	item["current"] = env_manager.get_current(item["name"])["name"]
-	gui_service.init_env_menu(master, item, values, i)
+	gui_service.init_env_menu( item, values, i)
 
 
 
